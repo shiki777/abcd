@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="cn">
+<head>
+<meta name="mobile-web-app-capable" content="yes">
+	<script type="text/javascript">
+		function handleClick(){
+			var element=document.documentElement;
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+		}
+
+	</script>
+</head>
+<body>
+	12121212121212121  https://www.html5tricks.com/demo/css3-clock-count/index.html
+	<div onclick="handleClick();">点击</div>
+
+</body>
+</html>
