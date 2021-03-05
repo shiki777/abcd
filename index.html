@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="jquery.min.js"></script>
+  <script src="circleMagic.js"></script>
 </head>
 <script type="text/javascript">
   $.extend($.fn,{
@@ -103,8 +104,8 @@
 <style>
   body{
     margin: 0;
-/*    width: 1080px;
-    height: 1920px;*/
+    width: 100%;
+    height: 100%;
     background: url("background.jpg") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
@@ -117,7 +118,7 @@
     font-size: 8em;
     font-weight: bold;
     position: absolute;
-    top: 1270px;
+    top: 1279px;
     left: 42%;
     right: 50%;
     transform: translate(-50%, -50%);
@@ -125,21 +126,21 @@
   .hour{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
+    top: 1398px;
     left: 26%;
     right: 50%;
   }
   .mini{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
+    top: 1398px;
     left: 44%;
     right: 50%;
   }
   .sec{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
+    top: 1398px;
     left: 63%;
     right: 50%;
   }
@@ -150,6 +151,9 @@
 </style>
 <body>
 <div onclick="handleClick();" id="aa">点击</div>
+<header class="header">
+  <canvas id="canvas" width="1080" height="1920"></canvas>
+</header>
 <div id="fnTimeCountDown">
   <span class="day"></span>
   <span class="hour"></span>
@@ -157,6 +161,13 @@
   <span class="sec"></span>
 </div>
 <script type="text/javascript">
+  $("#fnTimeCountDown").fnTimeCountDown("2021/04/30 18:00:00");
+  $('.header').circleMagic({
+    radius: 35,
+    density: .1,
+    color: 'rgba(255,255,255, .4)',
+    clearOffset: .9
+  });
     function handleClick(){
       var element=document.documentElement;
       if(element.requestFullscreen) {
@@ -170,7 +181,6 @@
       }
       document.getElementById('aa').style.display = 'none';
     }
-  $("#fnTimeCountDown").fnTimeCountDown("2021/04/30 18:00:00");
 </script>
 </body>
 </html>
