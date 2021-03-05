@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="jquery.min.js"></script>
-  <script src="circleMagic.js"></script>
 </head>
 <script type="text/javascript">
   $.extend($.fn,{
@@ -103,8 +102,9 @@
 </script>
 <style>
   body{
-    width: 1080px;
-    height: 1920px;
+    margin: 0;
+/*    width: 1080px;
+    height: 1920px;*/
     background: url("background.jpg") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
@@ -150,9 +150,6 @@
 </style>
 <body>
 <div onclick="handleClick();" id="aa">点击</div>
-<header class="header">
-  <canvas id="canvas" width="1080" height="1920"></canvas>
-</header>
 <div id="fnTimeCountDown">
   <span class="day"></span>
   <span class="hour"></span>
@@ -174,12 +171,6 @@
       document.getElementById('aa').style.display = 'none';
     }
   $("#fnTimeCountDown").fnTimeCountDown("2021/04/30 18:00:00");
-  $('.header').circleMagic({
-    radius: 35,
-    density: .1,
-    color: 'rgba(255,255,255, .4)',
-    clearOffset: .9
-  });
 </script>
 </body>
 </html>
