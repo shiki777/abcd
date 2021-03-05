@@ -149,6 +149,7 @@
   }
 </style>
 <body>
+<div onclick="handleClick();" id="aa">点击</div>
 <header class="header">
   <canvas id="canvas" width="1080" height="1920"></canvas>
 </header>
@@ -159,6 +160,19 @@
   <span class="sec"></span>
 </div>
 <script type="text/javascript">
+    function handleClick(){
+      var element=document.documentElement;
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+      document.getElementById('aa').style.display = 'none';
+    }
   $("#fnTimeCountDown").fnTimeCountDown("2021/04/30 18:00:00");
   $('.header').circleMagic({
     radius: 35,
@@ -166,28 +180,6 @@
     color: 'rgba(255,255,255, .4)',
     clearOffset: .9
   });
-  $(function(){
-    var el = document.documentElement;
-    var rfs = el.requestFullScreen || el.webkitRequestFullScreen;
-    if(typeof rfs != "undefined" && rfs){
-      rfs.call(el);
-    }else if(typeof window.ActiveXObject != "undefined"){
-      var wscript = new ActiveXObject("WScript.Shell");
-      if(wscript != null){
-        wscript.SendKeys("{F11}");
-      }
-    }else if(el.msRequestFullscreen){
-      el.msRequestFullscreen();
-    }else if(el.oRequestFullscreen){
-      el.oRequestFullscreen();
-    }else if(el.webkitRequestFullscreen){
-      el.webkitRequestFullscreen();
-    }else if(el.mozRequestFullScreen){
-      el.mozRequestFullScreen();
-    }else{
-      alert('浏览器不支持全屏调用！');
-    }
-  })
 </script>
 </body>
 </html>
