@@ -105,50 +105,51 @@
 html {
  margin: 0;
  padding: 0;
- background-color:#BA0504;
+ background-color:#374050;
 }
   body{
     margin: 0;
      padding: 0;
     width: 1080px;
     height: 1920px;
-    background: url("dongzi.jpg") no-repeat;
+    background: url("background_qd.png") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
-    background-color:#BA0504;
+    background-color:#374050;
   }
   #fnTimeCountDown{
-    color: #ffe288;
+    /*color: #ffe288;*/
+    color: #fff;
     font-family: 宋体,serif;
   }
   .day{
     font-size: 8em;
     font-weight: bold;
     position: absolute;
-    top: 1270px;
-    left: 42%;
+    top: 1125px;
+    left: 57%;
     right: 50%;
     transform: translate(-50%, -50%);
   }
   .hour{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
-    left: 26%;
+    top: 1278px;
+    left: 16%;
     right: 50%;
   }
   .mini{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
-    left: 44%;
+    top: 1278px;
+    left: 42%;
     right: 50%;
   }
   .sec{
     position: absolute;
     font-size: 6em;
-    top: 1385px;
-    left: 63%;
+    top: 1278px;
+    left: 69%;
     right: 50%;
   }
   .header{
@@ -173,7 +174,7 @@ html {
   <span class="sec"></span>
 </div>
 <script type="text/javascript">
-  $("#fnTimeCountDown").fnTimeCountDown("2022/04/30 18:00:00");
+  $("#fnTimeCountDown").fnTimeCountDown("2022/05/01 18:00:00");
   $('.header').circleMagic({
     radius: 35,
     density: .1,
