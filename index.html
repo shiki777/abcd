@@ -105,17 +105,17 @@
 html {
  margin: 0;
  padding: 0;
- background-color:red;
+ background-color:#374050;
 }
   body{
     margin: 0;
      padding: 0;
     width: 1080px;
     height: 1920px;
-    background: url("background_ny1.png") no-repeat;
+    background: url("background_qd_03.png") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
-    background-color:red;
+    background-color:#374050;
   }
   #fnTimeCountDown{
     /*color: #ffe288;*/
@@ -174,13 +174,13 @@ html {
   <span class="sec"></span>
 </div>
 <script type="text/javascript">
-  // $("#fnTimeCountDown").fnTimeCountDown("2022/05/01 18:00:00");
-  // $('.header').circleMagic({
-  //   radius: 35,
-  //   density: .1,
-  //   color: 'rgba(255,255,255, .4)',
-  //   clearOffset: .9
-  // });
+  $("#fnTimeCountDown").fnTimeCountDown("2022/05/01 18:00:00");
+  $('.header').circleMagic({
+    radius: 35,
+    density: .1,
+    color: 'rgba(255,255,255, .4)',
+    clearOffset: .9
+  });
     function handleClick(){
       var element=document.documentElement;
       if(element.requestFullscreen) {
