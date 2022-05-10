@@ -1,318 +1,187 @@
-<html style="font-size: 45.4231px;"><head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-  <meta name="format-detection" content="telephone=no">
-  <meta content="yes" name="apple-mobile-web-app-capable">
-  <meta content="black" name="apple-mobile-web-app-status-bar-style">
-  <meta name="referrer" content="no-referrer-when-downgrade">
-  <link rel="icon" type="image/ico" href="https://img1.maka.im/favicon.ico">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="cache-control" content="no-cache">
-  <link rel="dns-prefetch" href="https://res.maka.im">
-  <link rel="dns-prefetch" href="https://img1.maka.im">
-  <link rel="dns-prefetch" href="https://img2.maka.im">
-  <title>嘉兴银行红芯工程反洗钱项目成功上线</title>
-  <meta name="description" content="嘉兴银行红芯工程反洗钱项目成功上线">
-  
-<!-- Open Graph data -->
-
-
-
-<meta property="og:image" content="https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg">
-<meta property="og:description" content="嘉兴银行红芯工程反洗钱项目成功上线">
-
-
-  <link rel="stylesheet" href="https://res.maka.im/css/makaElementEffect.v2.css">
-  <link rel="stylesheet" href="https://res.maka.im/css/animationOnAndOut.v1.css">
-
-  <link rel="canonical" href="https://maka.im/viewer/10874016/AQYN2VPUW10874016"> 
-
-  <script src="https://hm.baidu.com/hm.js?345905e7787afdd8c5d815d632ef2555"></script><script src="https://res.maka.im/cdn/npm/@sentry/browser@5.1.0/build/bundle.min.js" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    !(function(){
-      var dsn = 'https://2be0c552203d453bbe437546e93ad445@sentry2.maka.im/62'
-      Sentry.init({ dsn: dsn, sampleRate: 0.1 });
-    })()
-  </script>  
-  <script src="https://res.maka.im/cdn/maka/statistic/statisticSDK.9f9b.js"></script>
-
-
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="jquery.min.js"></script>
+  <script src="circleMagic.js"></script>
+</head>
+<script type="text/javascript">
+  $.extend($.fn,{
+    fnTimeCountDown:function(d){
+      this.each(function(){
+        var $this = $(this);
+        var o = {
+          hm: $this.find(".hm"),
+          sec: $this.find(".sec"),
+          mini: $this.find(".mini"),
+          hour: $this.find(".hour"),
+          day: $this.find(".day"),
+          month:$this.find(".month"),
+          year: $this.find(".year")
+        };
+        var f = {
+          haomiao: function(n){
+            if(n < 10)return "00" + n.toString();
+            if(n < 100)return "0" + n.toString();
+            return n.toString();
+          },
+          zero: function(n){
+            var _n = parseInt(n, 10);//解析字符串,返回整数
+            if(_n > 0){
+              if(_n <= 9){
+                _n = "0" + _n
+              }
+              return String(_n);
+            }else{
+              return "00";
+            }
+          },
+          dv: function(){
+            //d = d || Date.UTC(2050, 0, 1); //如果未定义时间，则我们设定倒计时日期是2050年1月1日
+            var _d = $this.data("end") || d;
+            var now = new Date(),
+              endDate = new Date(_d);
+            //现在将来秒差值
+            //alert(future.getTimezoneOffset());
+            var dur = (endDate - now.getTime()) / 1000 , mss = endDate - now.getTime() ,pms = {
+              hm:"000",
+              sec: "00",
+              mini: "00",
+              hour: "00",
+              day: "00",
+              month: "00",
+              year: "0"
+            };
+            if(mss > 0){
+              pms.hm = f.haomiao(mss % 1000);
+              pms.sec = f.zero(dur % 60);
+              pms.mini = Math.floor((dur / 60)) > 0? f.zero(Math.floor((dur / 60)) % 60) : "00";
+              pms.hour = Math.floor((dur / 3600)) > 0? f.zero(Math.floor((dur / 3600)) % 24) : "00";
+              pms.day = Math.floor((dur / 86400)) > 0? f.zero(Math.floor((dur / 86400))) : "00";
+              //月份，以实际平均每月秒数计算
+              pms.month = Math.floor((dur / 2629744)) > 0? f.zero(Math.floor((dur / 2629744)) % 12) : "00";
+              //年份，按按回归年365天5时48分46秒算
+              pms.year = Math.floor((dur / 31556926)) > 0? Math.floor((dur / 31556926)) : "0";
+            }else{
+              pms.year=pms.month=pms.day=pms.hour=pms.mini=pms.sec="00";
+              pms.hm = "000";
+              //alert('结束了');
+              return;
+            }
+            return pms;
+          },
+          ui: function(){
+            if(o.hm){
+              o.hm.html(f.dv().hm);
+            }
+            if(o.sec){
+              o.sec.html(f.dv().sec);
+            }
+            if(o.mini){
+              o.mini.html(f.dv().mini);
+            }
+            if(o.hour){
+              o.hour.html(f.dv().hour);
+            }
+            if(o.day){
+              o.day.html(f.dv().day);
+            }
+            if(o.month){
+              o.month.html(f.dv().month);
+            }
+            if(o.year){
+              o.year.html(f.dv().year);
+            }
+            setTimeout(f.ui, 1000);
+          }
+        };
+        f.ui();
+      });
+    }
+  });
+</script>
 <style>
-  .maka-barrage-dom {
-    display: none !important;
-  }
-  .stopAnimation {
-    display: none !important;
-  }
-  .runAnimation {
-    display: none !important;
-  }
-  .img11 {
-    width: 100%;
-    position: absolute;
-    z-index: 10000;
-    top: 43%;
-    /*display: none !important;*/
-  }
-  .aaa1 {
-    position: relative;
-    top: -330px
-  }
-    .aaa2 {
-    position: relative;
-    top: 230px;
-  }
-    .aaa3 {
-    position: relative;
-    top: 230px;
-  }
-    .bbb1 {
-    position: relative;
-    top: -200px;
-  }
-    .bbb2 {
-    position: relative;
-    top: -200px;
-  }
-  #aa {
-    position: absolute;
-    top:10px;
-    background: #ccc;
-    color: #000;
-    z-index: 100000;
-  }
-  .maka-Arrow {
-    display: none !important;
-  }
-  html {
+html {
  margin: 0;
  padding: 0;
+ background-color:#374050;
 }
   body{
     margin: 0;
      padding: 0;
     width: 1080px;
     height: 1920px;
+    background: url("background_qd_03.png") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
+    background-color:#374050;
   }
-</style>
-  
-    
-  
-    
-  
-    
-    <link href="https://res.maka.im/cdn/maka/release/main.0e648a9c.css" rel="stylesheet">
-    
-  
-
-   <script>
-    window.viewerConfig = {"jsonHost":"//res.maka.im/","apiHost":"//api.maka.im/","imgHost":"//img1.maka.im/","musicHost":"//res.maka.im/","resHost":"//res.maka.im/","fontHost":"//font.maka.im/","env":"production"}
-    window.projectVersion = {"id":"AQYN2VPUW10874016","works_id":"AQYN2VPUW10874016","uid":10874016,"title":"嘉兴银行红芯工程反洗钱项目成功上线","content":"嘉兴银行红芯工程反洗钱项目成功上线","comment":"","thumb":"https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg","first_img":"https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg","version":"12","editor_version":4,"template_id":"T_X0ICE71S","parent_event_id":"","identity":1,"category":1,"secondary_category":269,"size_id":0,"page_width":640,"page_height":1008,"other_property":null,"suite_app_type":0,"status":0,"create_device":"web","update_device":"ios","create_site":null,"create_time":"2022-04-26 13:39:27","update_time":"2022-04-26 23:21:54","is_delete":0,"is_bought_template":0,"is_used_local_fonts":0,"pv":0,"uv":0,"spec_id":317,"store_category_id":2149,"pay_status":0,"function_id":0,"event_type":"maka","json_url":"https://img1.maka.im/user/10874016/event/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.json","json_folder":"user/10874016/event/AQYN2VPUW10874016/","enable_edit":"1","spec_name":"翻页H5","type":"maka","viewer_url":"https://u10874016.viewer.maka.im/k/AQYN2VPUW10874016","corner":"vip","show_ad":true,"enable_poster":"1","enable_poster_logo":"1","secondary_scene":183,"secondary_industry":1020,"style":228,"color":null,"size":0,"adaptiveHeight":false,"last_cache_time":1651026571921,"alias":{"size":"","spec":"scfanyeH5","store_category":"newh5","secondary_scene":"gongzuozongjie","secondary_industry":"nihulianwang","style":"shishangxuanku","color":""},"supportEdit":"1","notSupportCopywriting":"APP暂不支持该品类编辑，请使用Web浏览器访问maka.im编辑此作品","page_preview":["https://img1.maka.im/template/T_X0ICE71S_c0.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c1.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c2.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c3.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c4.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c5.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c6.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c7.jpg?1651026571","https://img1.maka.im/template/T_X0ICE71S_c8.jpg?1651026571"],"templateInfo":{"id":"T_X0ICE71S","template_id":"T_X0ICE71S","num_id":1220350,"title":"时尚大气红色2021感谢有您拥抱2022年终总结汇报H5","description":"MAKA在线H5/平面/视频设计工具，提供精美好看的设计模板，该作品主题是翻页H5，使用场景是总结报告、企业宣传、热点话题，采用了时尚的设计风格。点击“立即使用”，《时尚大气红色2021感谢有您拥抱2022年终总结汇报H5》一键生成，在线编辑，简单拖拉拽，5分钟做出精美的H5，一键分享到多社交平台，并能实时查看访客数据，实现更高效传播转化。<br/>*MAKA提示您：当前模版中的图文等素材纯属虚构仅作为参考！","collected":false,"type":"maka","category_id":1,"secondary_category_id":269,"category":"H5f","secondary_category":"H5","enableLease":true,"enable_lease":1,"thumb":"https://img1.maka.im/template/T_X0ICE71S_c0.jpg","preview":"https://img1.maka.im/template/T_X0ICE71S_v1.gif","pagePreviews":["https://img1.maka.im/template/T_X0ICE71S_c0.jpg","https://img1.maka.im/template/T_X0ICE71S_c1.jpg","https://img1.maka.im/template/T_X0ICE71S_c2.jpg","https://img1.maka.im/template/T_X0ICE71S_c3.jpg","https://img1.maka.im/template/T_X0ICE71S_c4.jpg","https://img1.maka.im/template/T_X0ICE71S_c5.jpg","https://img1.maka.im/template/T_X0ICE71S_c6.jpg","https://img1.maka.im/template/T_X0ICE71S_c7.jpg","https://img1.maka.im/template/T_X0ICE71S_c8.jpg"],"tags":["红色","总结","年终","汇报","年底"],"template_tags":[{"name":"企业宣传","type":"template_tag","tag_type":"secondary_scene","tag_id":3141,"tag_alias":"qiyexuanchuan1","object_page_type":"标签页","webJumpUrl":"https://www.maka.im/muban/tag-qiyexuanchuan1","jumpUrl":"maka://home/store/tag?tagName=企业宣传&tag=qiyexuanchuan1&tag_name=企业宣传","count":10809},{"name":"热点话题","type":"template_tag","tag_type":"secondary_scene","tag_id":6466,"tag_alias":"redianhuati","object_page_type":"标签页","webJumpUrl":"https://www.maka.im/muban/tag-redianhuati","jumpUrl":"maka://home/store/tag?tagName=热点话题&tag=redianhuati&tag_name=热点话题","count":2270},{"name":"总结报告","type":"template_tag","tag_type":"secondary_scene","tag_id":3139,"tag_alias":"zongjiebaogao","object_page_type":"标签页","webJumpUrl":"https://www.maka.im/muban/tag-zongjiebaogao","jumpUrl":"maka://home/store/tag?tagName=总结报告&tag=zongjiebaogao&tag_name=总结报告","count":64},{"name":"时尚","type":"template_tag","tag_type":"style","tag_id":3598,"tag_alias":"shishang","object_page_type":"标签页","webJumpUrl":"https://www.maka.im/muban/tag-shishang","jumpUrl":"maka://home/store/tag?tagName=时尚&tag=shishang&tag_name=时尚","count":17866},{"name":"红色","type":"template_tag","tag_type":"color","tag_id":231,"tag_alias":"red","object_page_type":"标签页","webJumpUrl":"https://www.maka.im/muban/tag-red","jumpUrl":"maka://home/store/tag?tagName=红色&tag=red&tag_name=红色","count":45466}],"viewerUrl":"https://viewer.maka.im/k/T_X0ICE71S?storeTemplate=true","isOwner":false,"firstImg":"https://img1.maka.im/template/T_X0ICE71S_v1.gif","show_sales":985,"duration":"2000","detail_page_uri":"https://maka.im/appfs/template/T_X0ICE71S","scene":182,"editor_version":3,"designerInfo":{"id":56858,"uid":4313492,"thumb":"https://img2.maka.im/user/4313492/thumb/94090abfb963c6ab0d042c109f696d8b.png@0-0-347-347a_250w","nickname":"陈陈陈","description":"","total":1888,"isFavourite":false},"size":0,"page_width":640,"page_height":1008,"online_time":"2021-12-11 17:07:49","spec_id":317,"store_category_id":2149,"tag_name":"H5","breadcrumb":[{"id":"1","name":"H5","value":"H5f"},{"id":"269","name":"H5","value":"H5"},{"id":"182","name":"数据报告","value":"shujubaogaof"}],"json_url":"https://img1.maka.im/user/4313492/template/T_X0ICE71S/request/T_X0ICE71S_sv1.json?time=1650368485","thumb_width":640,"thumb_height":640,"price":28,"real_price":28,"version":1,"salesNumber":0,"industry":24,"originalPrice":2800,"tagId":0,"hotTemplateTagName":"","hotTemplateTagColors":"","play_title":"","play_scene":"","play_rule":"","play_highlights":"","play_guide":"","store_category_alias":"newh5","store_category_name":"H5","specName":"翻页H5","specAlias":"scfanyeH5","isUseThumbImage":false,"need_org_certify":0},"vip_config":{"loading_page_custom":false,"show_makalogo":true,"viewer_domain_custom":false,"enable_bottom_menu":false,"enable_relay":false,"enable_lottery":false,"enable_form":true,"enable_vote":true,"enable_barrage":true,"enable_anti_fake_vote":true,"enable_form_lamp":false,"enable_pvuv_data":true,"enable_share_data":true,"enable_share_trend":true,"enable_read_time":false,"enable_read_time_per_page":false,"enable_read_page_num":false,"enable_share_level":false,"enable_visitor_source":false,"enable_vistior_device":false,"enable_visitor_location":false,"enable_pages_pvuv_data":false,"enable_pages_read_time":false,"enable_visitor_brand":false,"enable_maka":true,"enable_danye":true,"enable_poster":true,"enable_video":true,"enable_font":true,"enable_logo":true,"enable_poster_logo":true,"enable_material":true,"enable_marke_assistant":false,"enable_end_page_style":false,"enable_end_page_read_num":false,"enable_public_ball":false,"enable_open_password":false,"max_image_number":true,"max_music_number":true,"max_works_folder_number":true,"max_template_folder_number":true,"max_template_number":true,"max_image_folder_number":true,"max_works_recycle_bin_days":true,"source":"api"},"wx_thumb":"https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg","isnodeproxy":false,"showad":false,"isTempOffline":false,"pcViewerUrl":"https://maka.im/pcviewer/10874016/AQYN2VPUW10874016","canonical":"https://maka.im/viewer/10874016/AQYN2VPUW10874016","is_super_vip":false}
-    window.remote_ip_info = {}
-    
-   </script>
-
-
-<script>
-  window.isProduction = true
-  var server_url = 'https://sensor-push.maka.im/sa?token=214651bad853e6ca&project='+(window.isProduction ? 'production' : "default");
-  (function(para) {
-    var n = para.name;
-    window['sensorsDataAnalytic201505'] = n;
-    window[n] = {
-      _q: [],
-      para: para
-    };
-  })({
-    sdk_url: 'https://res.maka.im/assets/sensordata/sensorsdata.min.js',
-    heatmap_url: 'https://res.maka.im/assets/sensordata/heatmap.min.js',
-    name: 'sa',
-    server_url: server_url
-  });
-</script><script src="https://res.maka.im/assets/sensordata/sensorsdata.min.js"></script><script>
-  window.tools = {
-    getCookie: function(name)
-    {
-      var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-      if(arr=document.cookie.match(reg))
-        return arr[2];
-      else
-        return null;
-    },
-    isPreview: function(){
-      return window.location.search.indexOf('preview=true') > -1
-    }
+  #fnTimeCountDown{
+    /*color: #ffe288;*/
+    color: #fff;
+    font-family: 宋体,serif;
   }
-  const init = function() {
-    var uid = window.tools.getCookie('Makauid') 
-    if(window.tools.isPreview()){
-     uid = uid || (window.projectVersion ? (window.projectVersion.uid || '') : '')
-    }
-    //修复ie环境下无sa变量值报错的问题
-    try{
-      var sa = window.sa
-      if (uid) {
-        sa && sa.login && sa.login(uid)
-      } else {
-        sa && sa.logout && sa.logout()
-      }
-    }catch(e){console.log(e)}
+  .day{
+    font-size: 8em;
+    font-weight: bold;
+    position: absolute;
+    top: 1125px;
+    left: 67%;
+    right: 50%;
+    transform: translate(-50%, -50%);
   }
-
-  const __main = function() {
-    init()
+  .hour{
+    position: absolute;
+    font-size: 6em;
+    top: 1278px;
+    left: 16%;
+    right: 50%;
   }
-  const buildMark = function(name,data){
-    try{
-      var sa = window.sa
-      sa && sa.track && sa.track(name,data)
-    }catch(e){console.log(e)}
+  .mini{
+    position: absolute;
+    font-size: 6em;
+    top: 1278px;
+    left: 45%;
+    right: 50%;
   }
-  window.buildMark = buildMark
-  __main()
-</script><style>@font-face {font-family: "makahttpsfontmakaimmakafont111650986513529-atdb2ottf";src: url(blob:https://maka.im/e61ce321-44d1-49d0-b28e-999fe40bc891) format("truetype");font-weight: normal; font-style: normal;}</style><style>@font-face {font-family: "makahttpsfontmakaimmakafont111650986513531-esfo54ttf";src: url(blob:https://maka.im/e40d28c6-76b1-40fb-a057-34fb870800b3) format("truetype");font-weight: normal; font-style: normal;}</style></head>
-  
-
-
-
-
-<body>
-<div onclick="handleClick();" id="aa">1点击</div>
-<script>
-!(function(c,b,d,a){c[a]||(c[a]={});c[a].config={pid:"dm9pkj87tz@2d7bb8cf80603ea",appType:"web",imgUrl:"https://arms-retcode.aliyuncs.com/r.png?",sendResource:true,enableLinkTrace:true,behavior:true,useFmp:true};
-if( Math.round(Math.random() * 100) >= 1) return;
-with(b)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("crossorigin","",src=d)
-})(window,document,"https://retcode.alicdn.com/retcode/bl.js","__bl");
-</script>
-<h1 style="display: none;">嘉兴银行红芯工程反洗钱项目成功上线</h1>
-<!--用于做微信爬虫封面图-->
-<img style="z-index:-999;width:100px;height:100px;opacity:0" src="https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg" alt="嘉兴银行红芯工程反洗钱项目成功上线">
-<div id="free-watermark"></div>
-<style>
-  #free-watermark{
-    background: url(https://img1.maka.im/assets/usual/poster_viewer/watermark1.png) repeat ;
-    background-size: contain;
-    z-index:10000;
-    display:none;
-    position:absolute;
-    pointer-events: none;
-    left: 0;
-    top: 0;
+  .sec{
+    position: absolute;
+    font-size: 6em;
+    top: 1278px;
+    left: 73%;
+    right: 50%;
+  }
+  .header{
     width: 100%;
     height: 100%;
-    opacity: .18
+  }
+  #aa {
+    position: relative;
+    z-index: 100;
+    color: #fff;
   }
 </style>
-
-<div class="maka-canvas" style="width: 100%; height: 100%; left: 0px; top: 0px; position: absolute;">
-<img class="img11" src="./fxq3.jpg">
-
-  <!-----所有page的页面---->
-  <div class="maka-pages" id="maka-pages" style="touch-action: pan-x; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;">
-  <div class="maka-page maka-page-0" style="z-index: 999; background-color: rgb(255, 255, 255); display: block;"><div class="page-bg-0" style="position: absolute; width: 1181px; height: 1860.07px; top: 50%; left: 50%; margin-left: -590.5px; margin-top: -930.037px; overflow: hidden; background-color: white; opacity: 1;"></div><div class="maka-eleCanvas maka-eleCanvas-0" style="width: 1180.95px; height: 1860px; left: 0.0238095px; top: 0px; position: absolute;"><div ele-id="3200" style="width: 1236.31px; height: 2498.45px; left: -32.6685px; top: -322.88px; position: absolute; opacity: 1; cursor: pointer;"><div style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731393_6fb445174f0fb195e353daaf9fc694a7.gif&quot;); background-repeat: no-repeat; background-size: 1406.12px 2498.45px; background-position: -84.881px 0px;"></div></div><div ele-id="3201" style="width: 324.762px; height: 1048.1px; left: -9.22619px; top: 380.119px; position: absolute; opacity: 0.701961; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_27ef0fe477af0a559094440eab706330.undefined&quot;); background-repeat: no-repeat; background-size: 324.762px 1048.1px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731003_27ef0fe477af0a559094440eab706330.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3202" style="width: 747.321px; height: 904.167px; left: -9.22619px; top: 453.929px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_ffa46ad1dc460bf1441c16806be9556b.undefined&quot;); background-repeat: no-repeat; background-size: 747.321px 904.167px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731003_ffa46ad1dc460bf1441c16806be9556b.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3203" style="width: 704.881px; height: 704.881px; left: 36.9048px; top: 549.881px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_4b1990ab65e90663b02c2a0fc61d301a.undefined&quot;); background-repeat: no-repeat; background-size: 704.881px 704.881px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731003_4b1990ab65e90663b02c2a0fc61d301a.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3204" style="width: 424.405px; height: 564.643px; left: 588.631px; top: 68.2738px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_b68564675fe1c0e8e7add7217b5d6b04.undefined&quot;); background-repeat: no-repeat; background-size: 424.405px 564.643px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731004_b68564675fe1c0e8e7add7217b5d6b04.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3205" style="width: 754.702px; height: 1594.29px; left: 466.845px; top: 107.024px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_9251188eb0c0e4e7d8f9c83fba4e3c64.undefined&quot;); background-repeat: no-repeat; background-size: 754.702px 1594.29px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731004_9251188eb0c0e4e7d8f9c83fba4e3c64.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3206" style="width: 387.5px; height: 516.667px; left: 596.012px; top: 1123.75px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_d8573b81d316fb39697140d009353d34.undefined&quot;); background-repeat: no-repeat; background-size: 387.5px 516.667px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731004_d8573b81d316fb39697140d009353d34.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3207" style="width: 387.5px; height: 516.667px; left: 813.75px; top: 1343.33px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731005_57608b6fbfc48964fb1ee60125fc3556.undefined&quot;); background-repeat: no-repeat; background-size: 387.5px 516.667px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/4313492/images/731005_57608b6fbfc48964fb1ee60125fc3556.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3208" style="position: absolute; width: 934.177px; height: auto; top: 373.878px; left: 221.429px; transform-origin: center center; opacity: 1; transform: perspective(400px);"><div class="text" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: right; font-weight: normal; text-decoration: none; line-height: 1.2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 72px; display: block; animation: unset; will-change: unset;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 506.263px; height: 86.9565px;">红芯工程</div></div></div><div ele-id="3209" style="position: absolute; width: 934.177px; height: auto; top: 1395.92px; left: 153.155px; transform-origin: center center; opacity: 1; transform: perspective(400px);"><div class="text" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: right; font-weight: normal; text-decoration: none; line-height: 1.2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 28px; display: block; animation: unset; will-change: unset;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 506.263px; height: 36.9565px;">众志成城/勠力同心</div></div></div><div ele-id="3210" style="position: absolute; width: 934.177px; height: auto; top: 1511.29px; left: 143.96px; transform-origin: center center; opacity: 1; transform: perspective(400px);"><div class="text" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: right; font-weight: normal; text-decoration: none; line-height: 2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 24px; display: block; animation: unset; will-change: unset;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 506.263px; height: 47.8261px;">2021.4-2022.4</div></div></div><div ele-id="3211" style="position: absolute; width: 1083.14px; height: auto; top: 591.802px; left: 71.6335px; transform-origin: center center; opacity: 1; transform: perspective(400px);"><div class="text" style="font-family: makahttpsfontmakaimmakafont111650986513531-esfo54ttf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: right; font-weight: normal; text-decoration: none; line-height: 1.2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 120px; display: block; animation: unset; will-change: unset;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 586.994px; height: 289.13px;"><div><span style="font-size: 106.38323211669922px;color: #ffffff;font-weight: normal;font-style: normal;text-decoration: none;">反洗钱项目</span></div><div><span style="font-size: 106.38323211669922px;color: #ffffff;font-weight: normal;font-style: normal;text-decoration: none;">成功上线！</span></div></div></div></div><div ele-id="3212" style="width: 677.035px; height: 143.85px; left: -9.22619px; top: -139.956px; position: absolute; opacity: 1; cursor: pointer; transform: perspective(400px);"><div class="" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/10874016/images/952948_6704c52ac942dce88ee235323fb966cc.png?x-oss-process=image/crop,x_0,y_0,w_4763,h_1011/auto-orient,1&quot;); background-repeat: no-repeat; background-size: 677.847px 143.85px; background-position: center center; display: block; animation: unset; will-change: unset;"><img src="https://img1.maka.im/user/10874016/images/952948_6704c52ac942dce88ee235323fb966cc.png?x-oss-process=image/crop,x_0,y_0,w_4763,h_1011/auto-orient,1" style="width: 100%; height: 100%; opacity: 0;"></div></div></div></div><div class="maka-page maka-page-1" style="z-index: 998; background-color: rgb(255, 255, 255);"><div class="page-bg-1" style="position: absolute; width: 1181px; height: 1860.07px; top: 50%; left: 50%; margin-left: -590.5px; margin-top: -930.037px; overflow: hidden; background-color: rgb(255, 255, 255); opacity: 1;"></div><div class="maka-eleCanvas maka-eleCanvas-1" style="width: 1180.95px; height: 1860px; left: 0.0238095px; top: 0px; position: absolute;"><div ele-id="3200" style="width: 1236.31px; height: 2498.45px; left: -45.7545px; top: -322.836px; position: absolute; opacity: 1; cursor: pointer;"><div style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731393_6fb445174f0fb195e353daaf9fc694a7.gif&quot;); background-repeat: no-repeat; background-size: 1406.12px 2498.45px; background-position: -84.881px 0px;"></div></div><div ele-id="3201" style="width: 1070.24px; height: 2192.14px; left: -13.4783px; top: -193.75px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731002_3fbebff7b84cbc32e3ea9dfe5b69b001.undefined&quot;); background-repeat: no-repeat; background-size: 1070.24px 2192.14px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731002_3fbebff7b84cbc32e3ea9dfe5b69b001.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3202" style="width: 324.762px; height: 1048.1px; left: -9.22619px; top: 380.119px; position: absolute; opacity: 0.701961; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_27ef0fe477af0a559094440eab706330.undefined&quot;); background-repeat: no-repeat; background-size: 324.762px 1048.1px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731003_27ef0fe477af0a559094440eab706330.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3203" style="width: 747.321px; height: 904.167px; left: -9.22619px; top: 453.929px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_ffa46ad1dc460bf1441c16806be9556b.undefined&quot;); background-repeat: no-repeat; background-size: 747.321px 904.167px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731003_ffa46ad1dc460bf1441c16806be9556b.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3204" style="width: 704.881px; height: 704.881px; left: 36.9048px; top: 549.881px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731003_4b1990ab65e90663b02c2a0fc61d301a.undefined&quot;); background-repeat: no-repeat; background-size: 704.881px 704.881px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731003_4b1990ab65e90663b02c2a0fc61d301a.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3205" style="width: 424.405px; height: 564.643px; left: 588.631px; top: 68.2738px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_b68564675fe1c0e8e7add7217b5d6b04.undefined&quot;); background-repeat: no-repeat; background-size: 424.405px 564.643px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731004_b68564675fe1c0e8e7add7217b5d6b04.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3206" style="width: 754.702px; height: 1594.29px; left: 466.845px; top: 107.024px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_9251188eb0c0e4e7d8f9c83fba4e3c64.undefined&quot;); background-repeat: no-repeat; background-size: 754.702px 1594.29px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731004_9251188eb0c0e4e7d8f9c83fba4e3c64.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3207" style="width: 387.5px; height: 516.667px; left: 596.012px; top: 1123.75px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731004_d8573b81d316fb39697140d009353d34.undefined&quot;); background-repeat: no-repeat; background-size: 387.5px 516.667px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731004_d8573b81d316fb39697140d009353d34.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3208" style="width: 387.5px; height: 516.667px; left: 813.75px; top: 1343.33px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731005_57608b6fbfc48964fb1ee60125fc3556.undefined&quot;); background-repeat: no-repeat; background-size: 387.5px 516.667px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731005_57608b6fbfc48964fb1ee60125fc3556.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3209" style="width: 1013.04px; height: 1535.24px; left: 83.0357px; top: 173.452px; position: absolute; opacity: 0.5; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731296_44a69b616516a0c557211562e2b061b3.undefined&quot;); background-repeat: no-repeat; background-size: 1013.04px 1535.24px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731296_44a69b616516a0c557211562e2b061b3.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3210" style="width: 1047.34px; height: 1605.36px; left: 48.7291px; top: 123.711px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731297_2d900cfaa6b1c7f0e9da4c5028355f6d.undefined?x-oss-process=image/crop,x_0,y_0,w_548,h_840/auto-orient,1&quot;); background-repeat: no-repeat; background-size: 1047.34px 1605.36px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731297_2d900cfaa6b1c7f0e9da4c5028355f6d.undefined?x-oss-process=image/crop,x_0,y_0,w_548,h_840/auto-orient,1" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3211" style="width: 12.9167px; height: 66.4286px; left: 140.238px; top: 237.364px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/4313492/images/731298_591778b11615f0ed12f1b7f2bc5f14f9.undefined&quot;); background-repeat: no-repeat; background-size: 12.9167px 66.4286px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/4313492/images/731298_591778b11615f0ed12f1b7f2bc5f14f9.undefined" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3212" style="position: absolute; width: 620.928px; height: auto; top: 190.562px; left: 180.492px; transform-origin: center center; opacity: 1;"><div class="text animated" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: left; font-weight: normal; text-decoration: none; line-height: 1.8; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 48px; display: none;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 336.503px; height: 86.9565px;">项目介绍</div></div></div><div ele-id="3213" style="position: absolute; width: 886.841px; height: auto; top: 726.737px; left: 158.713px; transform-origin: center center; opacity: 1;"><div class="text animated" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: left; font-weight: normal; text-decoration: none; line-height: 1.8; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 24px; display: none;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 480.611px; height: 485.892px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新一代反洗钱项目作为嘉兴银行红芯工程2.0建设今年首个上线项目，于2021年4月启动，历经了300多个日夜的奋战拼搏，于2022年4月26日正式上线。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新反洗钱系统满足大额可疑交易数据报送、反洗钱现场检查、客户身份识别、客户风险评级、名单管理、机构风险自评估、统计分析、报表管理等方面的业务需求。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;坚持“风险为本“的理念进行反洗钱履职和内控管理，同时提升我行应对反洗钱各类风险的识别能力和全行反洗钱工作管理水平！</div></div></div><div ele-id="3214" style="width: 885.714px; height: 300.447px; left: 142.565px; top: 332.469px; position: absolute; opacity: 1; cursor: pointer;"><div class="animated" style="position: absolute; width: 100%; height: 100%; overflow: hidden; border-radius: 0px; box-shadow: black 0px 0px 0px; background-image: url(&quot;https://img1.maka.im/user/10874016/images/960043_1014fd474c607b3e91c3c02452426803.jpg?x-oss-process=image/crop,x_0,y_1192,w_3703,h_1642/resize,w_1771/auto-orient,1&quot;); background-repeat: no-repeat; background-size: 885.714px 392.668px; background-position: center center; display: none;"><img src="https://img1.maka.im/user/10874016/images/960043_1014fd474c607b3e91c3c02452426803.jpg?x-oss-process=image/crop,x_0,y_1192,w_3703,h_1642/resize,w_1771/auto-orient,1" style="width: 100%; height: 100%; opacity: 0;"></div></div><div ele-id="3215" style="position: absolute; width: 886.841px; height: auto; top: 1637.43px; left: 147.619px; transform-origin: center center; opacity: 1;"><div class="text animated" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(255, 255, 255); text-align: center; font-weight: normal; text-decoration: none; line-height: 2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 3.2px; font-size: 16px; display: none;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 480.611px; height: 32.6087px;">&nbsp;&nbsp;2021.4&nbsp;-&nbsp;2022.4&nbsp;&nbsp;</div></div></div><div ele-id="3216" style="position: absolute; width: 885.714px; height: 70.688px; top: 637.588px; left: 147.619px; transform: rotate(0deg);"><div class="animated" style="position: absolute; width: 885.714px; height: 70.688px; display: none;"><svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" style="position: absolute; width: 885.714px; height: 70.688px; opacity: 1;" preserveAspectRatio="none meet"><title>shape01</title><desc>CreatedwithSketch.</desc><defs></defs><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"><rect id="shape01" class="color1-fill" fill="#f4c96a" sketch:type="MSShapeGroup" x="0" y="0" width="70" height="70"></rect></g></svg></div></div><div ele-id="3217" style="position: absolute; width: 886.841px; height: auto; top: 630.608px; left: 144.427px; transform-origin: center center; opacity: 1;"><div class="text animated" style="font-family: makahttpsfontmakaimmakafont111650986513529-atdb2ottf; width: 100%; height: auto; color: rgb(0, 0, 0); text-align: center; font-weight: normal; text-decoration: none; line-height: 2; font-style: normal; overflow-wrap: break-word; white-space: pre-wrap; -webkit-font-smoothing: antialiased; letter-spacing: 0px; font-size: 24px; display: none;"><div style="transform: scale(1.84524); transform-origin: 0px 0px 0px; width: 480.611px; height: 47.8261px;">数字化&nbsp;/&nbsp;智能化&nbsp;/&nbsp;创未来</div></div></div></div></div></div>
-
-  <div class="maka-Arrow" style="display: block;">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAAkCAMAAADip6m2AAAAolBMVEUAAAAAAAAAAAAAAAAAAAABAQEAAAAAAAAHBwcAAAD////9/f37+/vt7e25ubn39/cKCgrz8/Pe3t7c3Nz+/v729vbW1tZra2tKSkoAAABpaWlgYGD9/f38/Pz5+fn5+fn39/fz8/Px8fHu7u7q6urm5ubj4+Pd3d3y8vLX19fJycnAwMC4uLisrKyhoaGVlZWGhoajo6MpKSkxMTGAgID///9oDYyzAAAANXRSTlMAAwcLFR0SGRAO+efJbSOcIqBDQvLNbTEpGxEQ9e3h29XDvLOsnJOJiIFpYVlNRkE7MiwfDLl52bwAAAGFSURBVEjH3ZXZboMwFERbHAMhC6EFQtrs+777/3+t98bGjmwqy32plHmLPYfMiYTy9nJ5F/kb693j+O4h7Y567SZjzbYHuDv72WCQxgfSjixpReyRqEWAdmK/YyaTfAHtpivjIo6TUReTZYxxcZzupju/XufP4g660aYD2USmuF13sKeP7Ae6uF13fKZBDRLQ81gTt+rOCmD9MPSBLmaauEV3hWidQOqIr57FLbrpDllCPAghSO9SU7xad3QCNiRQgwAeAn0a6eLVutOC4mRk+SCcToupIW7qsmWnByw25B3Svc6SaeKGbn9LA8UqGsW3fVMc2VJ3eJS6apcUPw5LcVmAq1J30qWBL1mN9gPanZTiUBE3pe5C6cpo4gtRjXkJjtf8cbnSlTHEcz5yTTwBh00UOVToVogfGvibhQq+pCyr0q0Wz1h6kTDsyZObPvn36bckh6qA8YE1eIUEa6GxyyeKEzhC1MLy6byL3yNP4BNn7TSWVRffHYHaI7qq7PB3qMr/mh8s20b2bOZlXQAAAABJRU5ErkJggg==" alt="">
-  </div>
-
-  <!-----所有page的页面---->
-
-  
-    <div class="ADpage"></div>
-  
-
-   <div class="maka-preload" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); opacity: 0; display: none;">
-      <!--pie为半圆-->
-      <div class="zoom" style="display: none;">
-          <div class="outer-circle"></div>
-          <div class="inner-circle"></div>
-      </div>
-      <div class="load" style="display: block;">
-          <div class="pie1" style="transform: rotate(180deg); background: transparent; display: none;"></div>
-          <div class="pie2" style="border-radius: 155px; z-index: 5; transform: rotate(167deg); background: transparent;"></div>
-          <div class="pie3"></div>
-          <div class="pie4" style="z-index: 4;"></div>
-          <div class="pie5"></div>
-          <div class="thumb">
-            <div class="img-block"><img src="https://img1.maka.im/user/10874016/h5/AQYN2VPUW10874016/AQYN2VPUW10874016_v12.jpg" alt=""></div>    
-            
-          </div>
-      </div>
-      
-      
-      <div class="mark">
-        
-          
-            <a href="http://maka.im" style="color:#cccccc;text-decoration:none">
-            <!--使用MAKA制作-->
-              <img class="maka-logo" src="https://img1.maka.im/assets/viewer-loading-logo.png">
-            </a>
-          
-        
-      </div>
-
-      
-    </div>
-
-
-    
-    
-    
-    
-    
-    
-    
-
-<div class="maka-barrage-dom" style="top: 0px; left: 0px; background-color: transparent; z-index: 1000;">
-      <div class="barrage-content" style="position: fixed; box-sizing: border-box; padding: 36.9048px; right: 0px; bottom: 0px; z-index: 1000; width: 100%; pointer-events: none; background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);">
-        <div class="barrage-words row" style="margin-top: 36.9048px; height: 669.821px;"><div class="barrage-word" style="min-height: 101.488px; line-height: 101.488px; font-size: 40.5952px; padding: 12.9167px; border-radius: 71.9643px; bottom: 561.845px; max-width: 977.976px; background-color: rgba(47, 50, 52, 0.6); transform: scale(1); opacity: 0; transition: bottom 2s ease-out 0s, opacity 0.75s linear 0.75s;">
-      
-      <img class="thumb" src="https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83erIib0NrzUfxyp4nYunjzoVQ28tmZiavvSqibeb6wiaap7pYIiaE2ETU049cKXAvp9HlOOVddKa6iaG0zbg/132" )="" style="width: 75.6548px; height: 75.6548px;">
-      <p class="word" style="line-height: 75.6548px; padding: 0px 35.0595px 0px 25.8333px; font-size: 40.5952px; box-sizing: border-box; max-width: 793.452px; word-break: break-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <span class="content">666666666666666</span>
-      </p> 
-    </div><div class="barrage-word" style="min-height: 101.488px; line-height: 101.488px; font-size: 40.5952px; padding: 12.9167px; border-radius: 71.9643px; bottom: 297.107px; max-width: 977.976px; background-color: rgba(47, 50, 52, 0.6); transform: scale(1); opacity: 0; transition: bottom 2s ease-out 0s, opacity 0.75s linear 0.75s;">
-      
-      <img class="thumb" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJLWuyicv6eYw176RyIBxLnrdicP7uGDNHeAHS5Ciby54zaFhquMurQzXaE5lq1YlEtgcOglxnroicF7A/132" )="" style="width: 75.6548px; height: 75.6548px;">
-      <p class="word" style="line-height: 75.6548px; padding: 0px 35.0595px 0px 25.8333px; font-size: 40.5952px; box-sizing: border-box; max-width: 793.452px; word-break: break-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <span class="content">66666666666</span>
-      </p> 
-    </div><div class="barrage-word" style="min-height: 101.488px; line-height: 101.488px; font-size: 40.5952px; padding: 12.9167px; border-radius: 71.9643px; bottom: 31.369px; max-width: 977.976px; background-color: rgba(47, 50, 52, 0.6); transform: scale(1); opacity: 1; transition: all 0.65s ease-in 0s;">
-      
-      <img class="thumb" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTK7H70jhKO2oPVr7dQw6F0KbR2Gibd0ohia9fn38n5WhFMHT8pZ0yRSeZEdFmZTicMLLfBqIkRLJN3lA/132" )="" style="width: 75.6548px; height: 75.6548px;">
-      <p class="word" style="line-height: 75.6548px; padding: 0px 35.0595px 0px 25.8333px; font-size: 40.5952px; box-sizing: border-box; max-width: 793.452px; word-break: break-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <span class="content">6666666</span>
-      </p> 
-    </div><div class="barrage-word" style="min-height: 101.488px; line-height: 101.488px; font-size: 40.5952px; padding: 12.9167px; border-radius: 71.9643px; bottom: -133.369px; max-width: 977.976px; background-color: rgba(47, 50, 52, 0.6); transform: scale(0.1);">
-      
-      <img class="thumb" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKDpLW4uTNYNKnvPudUlosNH2rlejjMD82jK2aVMGx7UtZVlCuKNaoBcIZV8GmZv8OT3mNNHS8gyg/132" )="" style="width: 75.6548px; height: 75.6548px;">
-      <p class="word" style="line-height: 75.6548px; padding: 0px 35.0595px 0px 25.8333px; font-size: 40.5952px; box-sizing: border-box; max-width: 793.452px; word-break: break-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <span class="content">66666666666666666</span>
-      </p> 
-    </div><div class="barrage-word" style="min-height: 101.488px; line-height: 101.488px; font-size: 40.5952px; padding: 12.9167px; border-radius: 71.9643px; bottom: -265.738px; max-width: 977.976px; background-color: rgba(47, 50, 52, 0.6); transform: scale(0.1);">
-      
-      <img class="thumb" src="https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLTrd26fV2aU0icxYQevAn9F3MAFk78ibVJua60iaVHibFqricwPrECGRxGRIUdVFUnTFXMSHstOMKQAicA/132" )="" style="width: 75.6548px; height: 75.6548px;">
-      <p class="word" style="line-height: 75.6548px; padding: 0px 35.0595px 0px 25.8333px; font-size: 40.5952px; box-sizing: border-box; max-width: 793.452px; word-break: break-all; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <span class="content">666</span>
-      </p> 
-    </div></div>
-
-
-  <div id="hiddenText" style="position:fixed;top:-100px;z-index:-999;"></div>
-  
-
-  
-    <script src="https://res.maka.im/cdn/maka/release/vendors.0e648a9c.js"></script>
-  
-    <script src="https://res.maka.im/cdn/maka/release/viewerVendors.0e648a9c.js"></script>
-  
-    <script src="https://res.maka.im/cdn/maka/release/main.0e648a9c.js"></script><div class="tips-modal" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; display: none; background: rgba(0, 0, 0, 0.8); z-index: 100000;"><div class="tips-wrapper" style="background: rgb(255, 255, 255); width: 811.905px; padding: 55.3571px 36.9048px; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 14.7619px;"><div class="tipTitle" style="height: 147.619px; text-align: center; display: none; line-height: 147.619px; font-size: 73.8095px;"></div><div class="tipContent" style="text-align: center; font-size: 44.2857px; display: none; word-break: break-all; padding: 73.8095px 0px;"></div><div class="tipButton" style="color: rgb(255, 255, 255); width: 100%; margin: 0px auto; background: rgb(24, 124, 234); border-radius: 11.0714px; height: 147.619px; display: none; line-height: 147.619px; font-size: 44.2857px; cursor: pointer;"></div><div class="tipButtons" style="color: rgb(255, 255, 255); width: 100%; margin: 0px auto; display: none; font-size: 44.2857px; box-sizing: border-box; text-align: center;"><div class="cancelButton" style="color: rgb(255, 255, 255); width: 45%; margin: 0px 2%; background: rgb(187, 187, 187); display: inline-block; border-radius: 11.0714px; height: 147.619px; line-height: 147.619px;">取消</div><div class="confirmButton" style="color: rgb(255, 255, 255); width: 45%; margin: 0px 2%; background: rgb(24, 124, 234); display: inline-block; border-radius: 11.0714px; height: 147.619px; line-height: 147.619px;">确定</div></div></div></div><div class="tips-modal" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; display: none; z-index: 100000;"><div class="tips-wrapper" style="background: rgba(0, 0, 0, 0.9); margin: 5px auto 0px; width: 369.048px; padding: 18.4524px 23.9881px; font-size: 14px; line-height: 2; text-align: center; color: white; border-radius: 8px;"></div></div>
-  <script type="text/javascript">
-        function handleClick(){
+<body>
+<div onclick="handleClick();" id="aa">点击</div>
+<header class="header">
+  <canvas id="canvas" width="1080" height="1920"></canvas>
+</header>
+<div id="fnTimeCountDown">
+  <span class="day"></span>
+  <span class="hour"></span>
+  <span class="mini"></span>
+  <span class="sec"></span>
+</div>
+<script type="text/javascript">
+  $("#fnTimeCountDown").fnTimeCountDown("2022/06/24 18:00:00");
+  $('.header').circleMagic({
+    radius: 35,
+    density: .1,
+    color: 'rgba(255,255,255, .4)',
+    clearOffset: .9
+  });
+    function handleClick(){
       var element=document.documentElement;
       if(element.requestFullscreen) {
         element.requestFullscreen();
@@ -325,35 +194,6 @@ with(b)with(body)with(insertBefore(createElement("script"),firstChild))setAttrib
       }
       document.getElementById('aa').style.display = 'none';
     }
-    setTimeout(function(){
-      console.log(1);
-    var divList = document.getElementsByTagName('div');
-    for(var i =0; i < divList.length;i++){
-      var ele = divList[i];
-      if(ele.innerHTML == '红芯工程'){
-        ele.className = 'aaa1'
-      }
-            if(ele.innerHTML == '众志成城/勠力同心'){
-        ele.className = 'aaa2'
-      }
-                  if(ele.innerHTML == '2021.4-2022.4'){
-        ele.className = 'aaa3'
-      }
-    }
-    //
-    var spanList = document.getElementsByTagName('span');
-        for(var i =0; i < spanList.length;i++){
-      var ele = spanList[i];
-      if(ele.innerHTML == '反洗钱项目'){
-        ele.className = 'bbb1'
-      }
-            if(ele.innerHTML == '成功上线！'){
-        ele.className = 'bbb2'
-      }
-    }
-    var imgList = document.getElementsByTagName('span');
-    //
-    },10000)
-
-  </script>
-</body></html>
+</script>
+</body>
+</html>
