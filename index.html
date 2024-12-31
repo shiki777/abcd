@@ -110,9 +110,9 @@ html {
   body{
     margin: 0;
      padding: 0;
-    width: 1080px;
-    height: 1920px;
-    background: url("background_qd_03.png") no-repeat;
+    /* width: 1080px; */
+    /* height: 1920px; */
+    background: url("background_hxxc.png") no-repeat;
     background-size:100% 100%;
     background-attachment:fixed;
     background-color:#374050;
@@ -126,7 +126,7 @@ html {
     font-size: 8em;
     font-weight: bold;
     position: absolute;
-    top: 1125px;
+    top: 1240px;
     left: 57%;
     right: 50%;
     transform: translate(-50%, -50%);
@@ -134,21 +134,21 @@ html {
   .hour{
     position: absolute;
     font-size: 6em;
-    top: 1278px;
+    top: 1420px;
     left: 16%;
     right: 50%;
   }
   .mini{
     position: absolute;
     font-size: 6em;
-    top: 1278px;
+    top: 1420px;
     left: 42%;
     right: 50%;
   }
   .sec{
     position: absolute;
     font-size: 6em;
-    top: 1278px;
+    top: 1420px;
     left: 69%;
     right: 50%;
   }
@@ -161,20 +161,23 @@ html {
     z-index: 100;
     color: #fff;
   }
+  .box-container {
+
+  }
 </style>
 <body>
 <div onclick="handleClick();" id="aa">点击1</div>
 <header class="header">
   <canvas id="canvas" width="1080" height="1920"></canvas>
 </header>
-<div id="fnTimeCountDown">
+<div id="fnTimeCountDown" class="box-container">
   <span class="day"></span>
   <span class="hour"></span>
   <span class="mini"></span>
   <span class="sec"></span>
 </div>
 <script type="text/javascript">
-  $("#fnTimeCountDown").fnTimeCountDown("2022/06/24 24:00:00");
+  $("#fnTimeCountDown").fnTimeCountDown("2025/05/01 00:00:01");
   $('.header').circleMagic({
     radius: 35,
     density: .1,
